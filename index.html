@@ -6,7 +6,7 @@
         <title>JavaScript string decoder</title>
 
 
-<script type="text/javascript" src="./script/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="script/jquery-1.8.3.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
@@ -192,17 +192,7 @@ var exampleRaw = "Joe's Caf\u00e9 & Bar \u266b";
 <body>
 
 <div id="handle-wrapper"><div id="handle"></div></div>
-<div id="home"><a href="https://coderstoolbox.net/">Coder’s Toolbox</a></div>
-<div id="lid">
-<ul id="menubar">
-    <li><a href="https://coderstoolbox.net/unixtimestamp/">Time conversion</a></li>
-    <li>· <a href="https://coderstoolbox.net/string/">String conversion</a></li>
-    <li>· <a href="https://coderstoolbox.net/number/">Number conversion</a></li>
-    <li>· <a href="https://coderstoolbox.net/network/">Network</a></li>
-    <li>· <a href="https://coderstoolbox.net/network/bandwidth.php">Bandwidth</a></li>
-    <li>· <a href="https://coderstoolbox.net/xml/xpath.php">XPath (beta)</a></li>
-</ul>
-</div>
+
 <div id="lock"></div>
 
 <div id="main">
@@ -242,18 +232,18 @@ Target character set:
 <label for="charset_utf_8"><input type="radio" name="charset" id="charset_utf_8" value="utf_8" onclick="update()" accesskey="8">UTF-<span class="accesskey">8</span></label>
 </p>
 
+<p><label for="input">Input</label>
+   (example: <span class="example" id="exampleInput">&nbsp;</span>)<br>
+<textarea rows="5" cols="80" name="input" id="input" wrap="off" oninput="update()" accesskey="I"></textarea></p>
 
-<p><label for="input"><span class="accesskey">I</span>nput</label>
-   (example: <span class="example" id="exampleInput">Joe\'s Caf\xe9 &amp; Bar \u266b</span>)<br>
-<textarea rows="5" cols="80" name="input" id="input" wrap="off" accesskey="I" spellcheck="false"></textarea></p>
-
-<p><label for="output"><span class="accesskey">O</span>utput</label>
-   (example: <span class="example" id="exampleOutput">Joe's Café &amp; Bar ♫</span>)<br>
-<textarea rows="5" cols="80" name="output" id="output" wrap="off" readonly="" accesskey="O"></textarea></p>
+<p><label for="output">Output</label>
+   (example: <span class="example" id="exampleOutput">&nbsp;</span>)<br>
+<textarea rows="5" cols="80" name="output" id="output" wrap="off" readonly accesskey="O"></textarea></p>    
+    
 
 </form>
 
-<script type="text/javascript" src="./script/string.js"></script>
+<script type="text/javascript" src="script/string.js"></script>
 
 
 <!-- main -->
@@ -266,8 +256,8 @@ Target character set:
 <p></p>
 </div>
 
-<script type="text/javascript" src="./script/accesskeys.js"></script>
-<script type="text/javascript" src="./script/lib.js"></script>
+<script type="text/javascript" src="script/accesskeys.js"></script>
+<script type="text/javascript" src="script/lib.js"></script>
 <script type="text/javascript">
 
   $(document).ready(function(){
