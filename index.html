@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JavaScript string decoder</title>
+
+
+<script type="text/javascript" src="./script/jquery-1.8.3.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    background-color: #eb9316;
+    color: #333;
+    margin: .7em 2.4em;
+    padding: 0;
+    font-family: helvetica, arial;
+    font-size: 16px;
+    line-height: 135%;
+}
+@media only screen and (min-width: 800px) and (min-height: 600px) {
+    body {
+        font-size: 17px;
+    }
+}
+@media only screen and (min-width: 1000px) and (min-height: 800px) {
+    body {
+        font-size: 18px;
+    }
+}
+#home {
+    position: absolute;
+    margin-top: -1.2em;
+    margin-left: 1.4em;
+    font-size: 120%;
+}
+#home a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+h1 {
+    font-size: 160%;
+    margin: 1.3em 0 .9em 0;
+}
+#main {
+    background: white;
+    border-radius: 0 0 2em 2em;
+    z-index: 0;
+    padding: .7em 2em;
+    text-align: center;
+}
+#main a {
+    color: #eb9316;
+}
+#main a:hover, #main a:active {
+    color: #333;
+}
+#handle-wrapper {
+    width: 40%;
+    margin-left: 30%;
+}
+#handle {
+    border: 2em white;
+    border-style: solid solid none;
+    border-radius: 2em 2em 0 0;
+    height: 2em;
+}
+#lid {
+    min-height: 2em;
+    background: white;
+    margin-bottom: .5em;
+    border: 2em white;
+    border-radius: 2em 2em 0 0;
+    border-style: solid solid none;
+}
+#lock {
+    background-color: #eb9316;
+    position: absolute;
+    left: 50%;
+    width: 20%;
+    margin-top: -1.5em;
+    margin-left: -10%;
+    height: 2.5em;
+    border: 2em #eb9316;
+    border-radius: 2em;
+    z-index: 10;
+}
+
+#menubar {
+    margin: -1.3em -1.5em 0;
+    padding: 0 0 .8em;
+    text-align: center;
+}
+#menubar li {
+    display: inline;
+    line-height: 1.7em;
+}
+#menubar a {
+    color: inherit;
+    text-decoration: none;
+}
+#menubar a:hover, #menubar a:active {
+    color: #eb9316;
+}
+
+#banner {
+    margin: 2em 0 1.5em;
+}
+#footer {
+    text-align: center;
+    color: white;
+}
+#footer a {
+    color: white;
+}
+
+.accesskey {
+    text-decoration: underline;
+}
+
+table.horizontal {
+    margin-left: auto;
+    margin-right: auto;
+}
+table.horizontal th {
+    text-align: right;
+    padding-right: .5em;
+    font-weight: normal;
+}
+table.horizontal td {
+    text-align: left;
+}
+
+label {
+    white-space: nowrap;
+}
+
+.example {
+    color: green;
+}
+
+textarea {
+    width: 100%;
+}
+
+.disabled {
+    color: GrayText;
+}
+
+/* jQuery */
+.ui-wrapper {
+        border: 1px solid black;
+}
+.ui-wrapper input, .ui-wrapper textarea {
+        border: 0;
+}
+@media only screen and (max-width: 360px) {
+    body {
+        margin: 2em 1em;
+    }
+    #handle, #lock {
+        display: none;
+    }
+    table.horizontal th, table.horizontal td {
+        display: block;
+        text-align: left;
+    }
+    table.horizontal input[type="text"],
+    table.horizontal input[type="number"] {
+        width: 100%;
+    }
+    ul {
+        padding-left: 1em;
+    }
+
+}
+
+
+</style>
+
+<meta name="description" content="Encode and decode strings: Base64, URL, XML, JavaScript">
+<meta name="keywords" content="encode, encoder, encoding, decode, decoder, decoding, escape, unescape, base64, base 64, url, xml, ecmascript string, javascript string">
+
+<script>
+var titles = {"base64-encode":"Online Base64 encoder","base64-decode":"Online Base64 decoder","xml-encode":"Online XML entity encoder","xml-decode":"Online XML entity decoder","url-encode":"Online URL encoding ... percent-escape","url-decode":"Online URL decoding","js-encode":"Online JavaScript string encoder ... ECMAScript, JSON","js-decode":"Online JavaScript string decoder","utf8-encode":"Online UTF-8 encoder","utf8-decode":"Online UTF-8 decoder"};
+var exampleRaw = "Joe's Caf\u00e9 & Bar \u266b";
+</script>
+</head>
+
+<body>
+
+<div id="handle-wrapper"><div id="handle"></div></div>
+<div id="home"><a href="https://coderstoolbox.net/">Coder’s Toolbox</a></div>
+<div id="lid">
+<ul id="menubar">
+    <li><a href="https://coderstoolbox.net/unixtimestamp/">Time conversion</a></li>
+    <li>· <a href="https://coderstoolbox.net/string/">String conversion</a></li>
+    <li>· <a href="https://coderstoolbox.net/number/">Number conversion</a></li>
+    <li>· <a href="https://coderstoolbox.net/network/">Network</a></li>
+    <li>· <a href="https://coderstoolbox.net/network/bandwidth.php">Bandwidth</a></li>
+    <li>· <a href="https://coderstoolbox.net/xml/xpath.php">XPath (beta)</a></li>
+</ul>
+</div>
+<div id="lock"></div>
+
+<div id="main">
+<h1>String conversion</h1>
+
+<noscript>
+    <div style="border: 2px solid red; padding: .2em; margin: 1em">
+        <h3>JavaScript disabled!</h3>
+        <p>This page does not work without JavaScript.</p>
+    </div>
+</noscript>
+
+<form id="conversion" method="post">
+
+<p>
+<label for="encoding_base64"><input type="radio" name="encoding" id="encoding_base64" value="base64" onclick="update()" accesskey="B"><span class="accesskey">B</span>ase64</label>
+<label for="encoding_xml"><input type="radio" name="encoding" id="encoding_xml" value="xml" onclick="update()" accesskey="X" checked=""><span class="accesskey">X</span>ML</label>
+<label for="encoding_url"><input type="radio" name="encoding" id="encoding_url" value="url" onclick="update()" accesskey="U"><span class="accesskey">U</span>RL</label>
+<label for="encoding_js"><input type="radio" name="encoding" id="encoding_js" value="js" onclick="update()" accesskey="M">EC<span class="accesskey">M</span>AScript</label>
+<label for="encoding_none"><input type="radio" name="encoding" id="encoding_none" value="none" onclick="update()" accesskey="H">C<span class="accesskey">h</span>aracter set</label>
+</p>
+
+<p>
+<label for="action_encode"><input type="radio" name="action" id="action_encode" value="encode" accesskey="E" onclick="update()" checked=""><span class="accesskey">E</span>ncode</label>
+
+<label for="action_decode"><input type="radio" name="action" id="action_decode" value="decode" accesskey="C" onclick="update()">De<span class="accesskey">c</span>ode</label>
+</p>
+
+<p>
+Target character set:
+<label for="charset_none" class=""><input type="radio" name="charset" id="charset_none" value="none" onclick="update()" accesskey="n"><span class="accesskey">N</span>one</label>
+
+<label for="charset_us_ascii"><input type="radio" name="charset" id="charset_us_ascii" value="us_ascii" onclick="update()" accesskey="a" checked="">US-<span class="accesskey">A</span>SCII</label>
+
+<label for="charset_iso_8859_1"><input type="radio" name="charset" id="charset_iso_8859_1" value="iso_8859_1" onclick="update()" accesskey="1">ISO-8859-<span class="accesskey">1</span></label>
+
+<label for="charset_utf_8"><input type="radio" name="charset" id="charset_utf_8" value="utf_8" onclick="update()" accesskey="8">UTF-<span class="accesskey">8</span></label>
+</p>
+
+
+<p><label for="input"><span class="accesskey">I</span>nput</label>
+   (example: <span class="example" id="exampleInput">Joe\'s Caf\xe9 &amp; Bar \u266b</span>)<br>
+<textarea rows="5" cols="80" name="input" id="input" wrap="off" accesskey="I" spellcheck="false"></textarea></p>
+
+<p><label for="output"><span class="accesskey">O</span>utput</label>
+   (example: <span class="example" id="exampleOutput">Joe's Café &amp; Bar ♫</span>)<br>
+<textarea rows="5" cols="80" name="output" id="output" wrap="off" readonly="" accesskey="O"></textarea></p>
+
+</form>
+
+<script type="text/javascript" src="./script/string.js"></script>
+
+
+<!-- main -->
+</div>
+
+<div id="footer">
+<!--
+<div><g:plusone annotation="none"></g:plusone></div>
+-->
+<p></p>
+</div>
+
+<script type="text/javascript" src="./script/accesskeys.js"></script>
+<script type="text/javascript" src="./script/lib.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    highlightAccessKeys();
+    hookUpOnInput();
+    var textarea = $('textarea.resizable-s');
+    if (textarea.resizable) textarea.resizable({handles : 's'});
+  });
+
+</script>
+
+
+
+
+</body>
+</html>
